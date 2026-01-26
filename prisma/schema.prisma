@@ -20,29 +20,69 @@ model Admin {
 
 // Product categories (Books, Stationery, Bags, etc.)
 model Category {
-  id          String    @id @default(cuid())
-  name        String    @unique
+  id          String     @id @default(cuid())
+  name        String     @unique
   description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  slug        String?    @unique  // URL-friendly name
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   products    Product[]
 }
 
 // Products (books, stationery, bags, etc.)
 model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  image       String?
-  stock       Int         @default(0)
-  categoryId  String
-  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  orderItems  OrderItem[]
+  id                String      @id @default(cuid())
+  
+  // Basic Info
+  title             String
+  isbn              String?     // ISBN/Barcode
+  description       String?     // Full product summary/blurb (HTML tags supported)
+  
+  // Pricing
+  price             Float
+  originalPrice     Float?      // Price before discount
+  
+  // Inventory
+  available         Boolean     @default(true)  // True if in stock
+  stock             Int         @default(0)
+  sku               String?     // Stock Keeping Unit code
+  
+  // Images
+  mainImageUrl      String?     // Main/cover image
+  allImageUrls      String?     // Comma-separated or JSON array of all images
+  
+  // Categorization
+  productType       String?     // Novel, Stationery, Textbook, etc.
+  categoryId        String?
+  category          Category?   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  tags              String?     // Keywords for search filters (comma-separated)
+  
+  // Publishing Info
+  vendor            String?     // Publisher or brand name
+  publishedAt       DateTime?   // When product was made visible
+  
+  // Physical Properties
+  weight            String?     // Weight formatted as string (e.g., "0.5 kg")
+  weightGrams       Int?        // Numeric weight value in grams
+  requiresShipping  Boolean     @default(true)  // True if physical item
+  
+  // URLs & Handles
+  url               String?     // Direct link to product page
+  handle            String?     // End part of URL (slug)
+  
+  // Variants
+  variantTitle      String?     // Specifies version (e.g., "Hardcover", "Default Title")
+  
+  // Timestamps
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  
+  // Relations
+  orderItems        OrderItem[]
 
   @@index([categoryId])
+  @@index([sku])
+  @@index([isbn])
 }
 
 // Customer orders (no customer auth, just contact info)

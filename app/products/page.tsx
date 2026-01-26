@@ -29,7 +29,12 @@ export default async function ProductsPage({
   }
   
   if (search) {
-    where.name = { contains: search, mode: 'insensitive' };
+    where.OR = [
+      { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+      { isbn: { contains: search, mode: 'insensitive' } },
+      { sku: { contains: search, mode: 'insensitive' } },
+    ];
   }
   
   if (minPrice || maxPrice) {
@@ -144,11 +149,13 @@ export default async function ProductsPage({
               <ProductCard
                 key={product.id}
                 id={product.id}
-                name={product.name}
+                title={product.title}
                 price={product.price}
-                image={product.image}
+                originalPrice={product.originalPrice}
+                mainImageUrl={product.mainImageUrl}
                 stock={product.stock}
-                category={product.category.name}
+                categoryName={product.category?.name}
+                available={product.available ?? true}
               />
             ))}
           </div>

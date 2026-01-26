@@ -129,11 +129,13 @@ export default async function HomePage() {
                   <ProductCard
                     key={product.id}
                     id={product.id}
-                    name={product.name}
+                    title={product.title}
                     price={product.price}
-                    image={product.image}
+                    originalPrice={product.originalPrice}
+                    mainImageUrl={product.mainImageUrl}
                     stock={product.stock}
-                    category={product.category.name}
+                    categoryName={product.category?.name}
+                    available={product.available ?? true}
                   />
                 ))}
               </div>

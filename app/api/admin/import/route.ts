@@ -27,36 +27,75 @@ export async function POST(request: Request) {
       const product = products[i];
 
       try {
-        // Validate required fields
-        if (!product.name || !product.price || !product.categoryName) {
+        // Validate required fields (only title and price are required now)
+        if (!product.title || !product.price) {
           results.failed++;
-          results.errors.push(`Row ${i + 1}: Missing required fields (name, price, or category)`);
+          results.errors.push(`Row ${i + 1}: Missing required fields (title or price)`);
           continue;
         }
 
-        // Find or create category
-        let category = await prisma.category.findUnique({
-          where: { name: product.categoryName.trim() },
-        });
-
-        if (!category) {
-          category = await prisma.category.create({
-            data: {
-              name: product.categoryName.trim(),
-              description: product.categoryDescription || null,
-            },
+        // Find or create category (if provided)
+        let categoryId: string | null = null;
+        if (product.productType || product.categoryName) {
+          const categoryName = product.productType || product.categoryName;
+          let category = await prisma.category.findUnique({
+            where: { name: categoryName.trim() },
           });
+
+          if (!category) {
+            category = await prisma.category.create({
+              data: {
+                name: categoryName.trim(),
+                description: product.categoryDescription || null,
+                slug: categoryName.trim().toLowerCase().replace(/\s+/g, '-'),
+              },
+            });
+          }
+          categoryId = category.id;
         }
 
-        // Create product
+        // Parse boolean fields
+        const parseBoolean = (value: any): boolean => {
+          if (typeof value === 'boolean') return value;
+          if (typeof value === 'string') {
+            const lower = value.toLowerCase().trim();
+            return lower === 'true' || lower === '1' || lower === 'yes';
+          }
+          return false;
+        };
+
+        // Create product with all fields
         await prisma.product.create({
           data: {
-            name: product.name.trim(),
-            description: product.description || '',
+            title: product.title.trim(),
+            isbn: product.isbn?.trim() || product.barcode?.trim() || null,
+            description: product.description || null,
+            
             price: parseFloat(product.price),
-            stock: parseInt(product.stock || '0'),
-            image: product.image || null,
-            categoryId: category.id,
+            originalPrice: product.originalPrice ? parseFloat(product.originalPrice) : null,
+            
+            available: product.available !== undefined ? parseBoolean(product.available) : true,
+            stock: product.stock ? parseInt(product.stock) : 0,
+            sku: product.sku?.trim() || null,
+            
+            mainImageUrl: product.mainImageUrl || product.image || null,
+            allImageUrls: product.allImageUrls || null,
+            
+            productType: product.productType?.trim() || null,
+            categoryId: categoryId,
+            tags: product.tags?.trim() || null,
+            
+            vendor: product.vendor?.trim() || null,
+            publishedAt: product.publishedAt ? new Date(product.publishedAt) : new Date(),
+            
+            weight: product.weight?.trim() || null,
+            weightGrams: product.weightGrams ? parseInt(product.weightGrams) : null,
+            requiresShipping: product.requiresShipping !== undefined ? parseBoolean(product.requiresShipping) : true,
+            
+            url: product.url?.trim() || null,
+            handle: product.handle?.trim() || product.title.trim().toLowerCase().replace(/\s+/g, '-'),
+            
+            variantTitle: product.variantTitle?.trim() || 'Default Title',
           },
         });
 

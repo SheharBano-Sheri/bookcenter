@@ -12,14 +12,24 @@ import toast from 'react-hot-toast';
 
 interface Product {
   id: string;
-  name: string;
-  description: string;
+  title: string;
+  isbn?: string | null;
+  sku?: string | null;
+  description?: string | null;
   price: number;
-  image: string | null;
+  originalPrice?: number | null;
+  mainImageUrl: string | null;
+  allImageUrls?: string | null;
   stock: number;
-  category: {
+  available?: boolean | null;
+  productType?: string | null;
+  vendor?: string | null;
+  tags?: string | null;
+  weight?: string | null;
+  variantTitle?: string | null;
+  category?: {
     name: string;
-  };
+  } | null;
 }
 
 export default function ProductDetailPage() {
@@ -51,7 +61,8 @@ export default function ProductDetailPage() {
   const handleAddToCart = () => {
     if (!product) return;
 
-    if (product.stock <= 0) {
+    const isOutOfStock = !product.available || product.stock <= 0;
+    if (isOutOfStock) {
       toast.error('Product out of stock');
       return;
     }
@@ -59,9 +70,9 @@ export default function ProductDetailPage() {
     for (let i = 0; i < quantity; i++) {
       addItem({
         id: product.id,
-        name: product.name,
+        name: product.title,
         price: product.price,
-        image: product.image,
+        image: product.mainImageUrl,
         stock: product.stock,
       });
     }
@@ -121,10 +132,10 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             {/* Product Image */}
             <div className="relative h-96 bg-gray-100 rounded-lg overflow-hidden">
-              {product.image ? (
+              {product.mainImageUrl ? (
                 <Image
-                  src={product.image}
-                  alt={product.name}
+                  src={product.mainImageUrl}
+                  alt={product.title}
                   fill
                   className="object-cover"
                 />
@@ -133,24 +144,77 @@ export default function ProductDetailPage() {
                   <span className="text-8xl">📚</span>
                 </div>
               )}
+              {product.originalPrice && product.originalPrice > product.price && (
+                <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-bold">
+                  SALE
+                </div>
+              )}
             </div>
 
             {/* Product Info */}
             <div>
-              <p className="text-sm text-blue-600 font-semibold mb-2">{product.category.name}</p>
-              <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-              <p className="text-3xl font-bold text-blue-600 mb-6">
-                {formatPrice(product.price)}
-              </p>
-
+              {product.category && (
+                <p className="text-sm text-blue-600 font-semibold mb-2">{product.category.name}</p>
+              )}
+              <h1 className="text-4xl font-bold mb-4">{product.title}</h1>
+              
+              {/* Pricing */}
               <div className="mb-6">
-                <h2 className="font-semibold text-lg mb-2">Description</h2>
-                <p className="text-gray-700 leading-relaxed">{product.description}</p>
+                {product.originalPrice && product.originalPrice > product.price ? (
+                  <div>
+                    <p className="text-lg text-gray-500 line-through">{formatPrice(product.originalPrice)}</p>
+                    <p className="text-3xl font-bold text-red-600">{formatPrice(product.price)}</p>
+                    <p className="text-sm text-green-600 font-semibold">
+                      Save {formatPrice(product.originalPrice - product.price)}!
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-3xl font-bold text-blue-600">{formatPrice(product.price)}</p>
+                )}
               </div>
+
+              {/* Product Details */}
+              <div className="space-y-2 mb-6 text-sm">
+                {product.isbn && (
+                  <p><span className="font-semibold">ISBN:</span> {product.isbn}</p>
+                )}
+                {product.sku && (
+                  <p><span className="font-semibold">SKU:</span> {product.sku}</p>
+                )}
+                {product.vendor && (
+                  <p><span className="font-semibold">Vendor:</span> {product.vendor}</p>
+                )}
+                {product.weight && (
+                  <p><span className="font-semibold">Weight:</span> {product.weight}</p>
+                )}
+                {product.variantTitle && product.variantTitle !== 'Default Title' && (
+                  <p><span className="font-semibold">Variant:</span> {product.variantTitle}</p>
+                )}
+              </div>
+
+              {product.description && (
+                <div className="mb-6">
+                  <h2 className="font-semibold text-lg mb-2">Description</h2>
+                  <p className="text-gray-700 leading-relaxed">{product.description}</p>
+                </div>
+              )}
+
+              {product.tags && (
+                <div className="mb-6">
+                  <h2 className="font-semibold text-sm mb-2">Tags</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {product.tags.split(',').map((tag, i) => (
+                      <span key={i} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                        {tag.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Stock Status */}
               <div className="mb-6">
-                {product.stock > 0 ? (
+                {product.available && product.stock > 0 ? (
                   <p className="text-green-600 font-semibold">
                     ✓ In Stock ({product.stock} available)
                   </p>
@@ -160,7 +224,7 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Quantity Selector */}
-              {product.stock > 0 && (
+              {product.available && product.stock > 0 && (
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Quantity
@@ -186,11 +250,11 @@ export default function ProductDetailPage() {
               {/* Add to Cart Button */}
               <button
                 onClick={handleAddToCart}
-                disabled={product.stock <= 0}
+                disabled={!product.available || product.stock <= 0}
                 className="w-full bg-blue-600 text-white py-4 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-lg font-semibold"
               >
                 <ShoppingCart className="w-5 h-5" />
-                <span>{product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}</span>
+                <span>{product.available && product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}</span>
               </button>
             </div>
           </div>

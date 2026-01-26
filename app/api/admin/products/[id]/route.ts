@@ -10,17 +10,42 @@ export async function PUT(
     await requireAdmin();
     const { id } = await params;
     const body = await request.json();
-    const { name, description, price, image, stock, categoryId } = body;
+    const { 
+      title, 
+      description, 
+      price, 
+      mainImageUrl, 
+      stock, 
+      categoryId,
+      isbn,
+      sku,
+      originalPrice,
+      available,
+      productType,
+      vendor,
+      tags,
+      weight,
+      variantTitle
+    } = body;
 
     const product = await prisma.product.update({
       where: { id },
       data: {
-        name,
+        title,
         description,
         price: parseFloat(price),
-        image,
+        mainImageUrl,
         stock: parseInt(stock),
         categoryId,
+        isbn: isbn || null,
+        sku: sku || null,
+        originalPrice: originalPrice ? parseFloat(originalPrice) : null,
+        available: available !== undefined ? available : true,
+        productType: productType || null,
+        vendor: vendor || null,
+        tags: tags || null,
+        weight: weight || null,
+        variantTitle: variantTitle || null,
       },
       include: { category: true },
     });

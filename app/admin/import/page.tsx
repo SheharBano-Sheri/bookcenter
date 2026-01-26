@@ -6,13 +6,49 @@ import { Upload, Download, FileSpreadsheet, AlertCircle, CheckCircle } from 'luc
 import toast from 'react-hot-toast';
 
 interface CSVProduct {
-  name: string;
-  categoryName: string;
-  categoryDescription?: string;
+  // Required fields
+  title: string;
   price: string;
-  stock: string;
-  description: string;
-  image: string;
+  
+  // Identification
+  isbn?: string;
+  barcode?: string;
+  sku?: string;
+  
+  // Pricing
+  originalPrice?: string;
+  
+  // Availability
+  available?: string | boolean;
+  stock?: string;
+  
+  // Images
+  mainImageUrl?: string;
+  image?: string; // fallback
+  allImageUrls?: string;
+  
+  // Categorization
+  productType?: string;
+  categoryName?: string;
+  categoryDescription?: string;
+  tags?: string;
+  
+  // Publishing Info
+  vendor?: string;
+  publishedAt?: string;
+  
+  // Shipping
+  weight?: string;
+  weightGrams?: string;
+  requiresShipping?: string | boolean;
+  
+  // URLs & Metadata
+  url?: string;
+  handle?: string;
+  variantTitle?: string;
+  
+  // Content
+  description?: string;
 }
 
 export default function ImportProductsPage() {
@@ -41,7 +77,7 @@ export default function ImportProductsPage() {
 
         // Validate required columns
         const firstRow = data[0];
-        const requiredColumns = ['name', 'categoryName', 'price'];
+        const requiredColumns = ['title', 'price'];
         const missingColumns = requiredColumns.filter(col => !(col in firstRow));
 
         if (missingColumns.length > 0) {
@@ -91,10 +127,10 @@ export default function ImportProductsPage() {
   };
 
   const downloadTemplate = () => {
-    const template = `name,categoryName,categoryDescription,price,stock,description,image
-Sample Book Title,Books,Educational books for all ages,29.99,100,A comprehensive guide to...,https://example.com/image.jpg
-Premium Notebook Set,Stationery,Quality stationery items,15.50,200,5-pack ruled notebooks,https://example.com/notebook.jpg
-School Backpack,Bags,Durable school bags,45.00,50,Water-resistant backpack with laptop compartment,https://example.com/backpack.jpg`;
+    const template = `title,isbn,sku,price,originalPrice,available,stock,mainImageUrl,allImageUrls,productType,vendor,tags,weight,weightGrams,requiresShipping,url,handle,variantTitle,description
+Sample Book Title,978-1234567890,BOOK-001,29.99,39.99,true,100,https://example.com/book.jpg,https://example.com/book1.jpg|https://example.com/book2.jpg,Books,Penguin Publishers,"fiction,bestseller",500g,500,true,https://mybookstore.com/sample-book,sample-book-title,Paperback,A comprehensive guide to modern programming...
+Premium Notebook Set,,,15.50,19.99,true,200,https://example.com/notebook.jpg,,Stationery,Oxford,"notebooks,stationery",300g,300,true,https://mybookstore.com/notebook-set,premium-notebook-set,5-Pack,High-quality ruled notebooks perfect for students
+School Backpack,BAG-12345,BAG-SCH-01,45.00,55.00,true,50,https://example.com/backpack.jpg,,Bags,Nike,"backpack,school,bags",1.2kg,1200,true,https://mybookstore.com/school-backpack,school-backpack,Large,Water-resistant backpack with padded laptop compartment`;
 
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -122,9 +158,9 @@ School Backpack,Bags,Durable school bags,45.00,50,Water-resistant backpack with 
           <div className="flex-grow">
             <h3 className="font-bold text-lg mb-2">CSV Format Required</h3>
             <p className="text-gray-700 mb-4">
-              Your CSV must include these columns: <strong>name, categoryName, price</strong>
+              Your CSV must include these columns: <strong>title, price</strong>
               <br />
-              Optional columns: categoryDescription, stock, description, image
+              Optional columns: isbn, sku, originalPrice, available, stock, mainImageUrl, allImageUrls, productType, vendor, tags, weight, weightGrams, requiresShipping, url, handle, variantTitle, description
             </p>
             <button
               onClick={downloadTemplate}
@@ -170,20 +206,22 @@ School Backpack,Bags,Durable school bags,45.00,50,Water-resistant backpack with 
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">#</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ISBN/SKU</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {preview.slice(0, 10).map((product, index) => (
                   <tr key={index}>
                     <td className="px-4 py-2 text-sm">{index + 1}</td>
-                    <td className="px-4 py-2 text-sm font-medium">{product.name}</td>
-                    <td className="px-4 py-2 text-sm">{product.categoryName}</td>
+                    <td className="px-4 py-2 text-sm font-medium">{product.title}</td>
+                    <td className="px-4 py-2 text-sm">{product.isbn || product.sku || '-'}</td>
                     <td className="px-4 py-2 text-sm">${product.price}</td>
                     <td className="px-4 py-2 text-sm">{product.stock || 0}</td>
+                    <td className="px-4 py-2 text-sm">{product.productType || '-'}</td>
                   </tr>
                 ))}
               </tbody>
