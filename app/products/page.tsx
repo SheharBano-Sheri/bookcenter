@@ -53,17 +53,21 @@ export default async function ProductsPage({
   ]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col" style={{backgroundColor: '#F5F3EF'}}>
       <Header />
       
       <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">
-          {category ? `${category}` : 'All Products'}
-        </h1>
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-black mb-2" style={{color: '#3C096C', fontStyle: 'italic'}}>
+            {category ? `${category}` : 'All Products'}
+          </h1>
+          <p style={{color: '#3C096C', opacity: 0.7}}>✨ Discover our amazing collection</p>
+        </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <form method="get" className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 mb-8" style={{backgroundColor: 'white', border: '2px solid #9D4EDD'}}>
+          <h2 className="text-xl font-bold mb-6" style={{color: '#3C096C', fontStyle: 'italic'}}>🔍 Filter Products</h2>
+          <form method="get" className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Search */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -74,7 +78,7 @@ export default async function ProductsPage({
                 name="search"
                 defaultValue={search}
                 placeholder="Search by name..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -86,7 +90,7 @@ export default async function ProductsPage({
               <select
                 name="category"
                 defaultValue={category || ''}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
               >
                 <option value="">All Categories</option>
                 {categories.map((cat) => (
@@ -109,7 +113,7 @@ export default async function ProductsPage({
                 min="0"
                 step="0.01"
                 placeholder="0.00"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -125,7 +129,7 @@ export default async function ProductsPage({
                 min="0"
                 step="0.01"
                 placeholder="999.99"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -133,9 +137,9 @@ export default async function ProductsPage({
             <div className="md:col-span-4">
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition flex items-center space-x-2"
+                className="text-white px-8 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 font-semibold" style={{backgroundColor: '#9D4EDD'}}
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-5 h-5" />
                 <span>Apply Filters</span>
               </button>
             </div>
@@ -144,7 +148,7 @@ export default async function ProductsPage({
 
         {/* Products Grid */}
         {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -160,8 +164,10 @@ export default async function ProductsPage({
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">📦</div>
+            <p className="text-gray-500 text-xl font-semibold">No products found matching your criteria.</p>
+            <p className="text-gray-400 mt-2">Try adjusting your filters</p>
           </div>
         )}
       </main>

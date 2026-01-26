@@ -43,59 +43,63 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group">
+    <div className="group relative rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2" style={{backgroundColor: '#F5F3EF', border: '2px solid #9D4EDD'}}>
       <Link href={`/products/${id}`}>
-        <div className="relative h-64 bg-gray-100">
+        <div className="relative h-64 overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
           {mainImageUrl ? (
             <Image
               src={mainImageUrl}
               alt={title}
               fill
-              className="object-cover group-hover:scale-105 transition"
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">
-              <span className="text-4xl">📚</span>
+              <span className="text-6xl group-hover:scale-110 transition-transform duration-500">📚</span>
             </div>
           )}
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">Out of Stock</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-center justify-center backdrop-blur-sm">
+              <span className="text-white font-bold text-lg bg-black/50 px-6 py-3 rounded-full">Out of Stock</span>
             </div>
           )}
           {originalPrice && originalPrice > price && (
-            <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-              SALE
+            <div className="absolute top-3 right-3 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md animate-pulse" style={{backgroundColor: '#FF6B35'}}>
+              🔥 SALE
             </div>
           )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
       </Link>
       
-      <div className="p-4">
+      <div className="p-5">
         {categoryName && (
-          <p className="text-xs text-blue-600 font-semibold mb-1">{categoryName}</p>
+          <span className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full mb-2" style={{backgroundColor: '#9D4EDD'}}>
+            {categoryName}
+          </span>
         )}
         <Link href={`/products/${id}`}>
-          <h3 className="font-semibold text-lg mb-2 hover:text-blue-600 transition line-clamp-2">
+          <h3 className="font-bold text-lg mb-3 hover:opacity-70 transition line-clamp-2 min-h-[3.5rem]" style={{color: '#3C096C'}}>
             {title}
           </h3>
         </Link>
         
-        <div className="flex items-center justify-between">
+        <div className="flex items-end justify-between mt-4">
           <div>
             {originalPrice && originalPrice > price ? (
               <div className="flex flex-col">
-                <span className="text-sm text-gray-500 line-through">{formatPrice(originalPrice)}</span>
-                <span className="text-2xl font-bold text-red-600">{formatPrice(price)}</span>
+                <span className="text-sm text-gray-400 line-through">{formatPrice(originalPrice)}</span>
+                <span className="text-2xl font-black" style={{color: '#FF6B35'}}>{formatPrice(price)}</span>
               </div>
             ) : (
-              <span className="text-2xl font-bold text-blue-600">{formatPrice(price)}</span>
+              <span className="text-2xl font-black" style={{color: '#3C096C'}}>{formatPrice(price)}</span>
             )}
           </div>
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="text-white px-5 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:cursor-not-allowed flex items-center space-x-2 font-semibold"
+            style={{backgroundColor: isOutOfStock ? '#9CA3AF' : '#9D4EDD'}}
           >
             <ShoppingCart className="w-4 h-4" />
             <span>Add</span>

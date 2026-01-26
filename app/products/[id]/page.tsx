@@ -82,12 +82,12 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col" style={{backgroundColor: '#F5F3EF'}}>
         <Header />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading product...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4" style={{borderColor: '#9D4EDD'}}></div>
+            <p style={{color: '#3C096C'}}>Loading product...</p>
           </div>
         </main>
         <Footer />
@@ -97,14 +97,14 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col" style={{backgroundColor: '#F5F3EF'}}>
         <Header />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <p className="text-gray-600 text-lg mb-4">Product not found</p>
+            <p className="text-lg mb-4" style={{color: '#3C096C'}}>Product not found</p>
             <button
               onClick={() => router.push('/products')}
-              className="text-blue-600 hover:text-blue-700 font-semibold"
+              className="font-semibold hover:opacity-70 transition" style={{color: '#9D4EDD'}}
             >
               ← Back to Products
             </button>
@@ -116,22 +116,22 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col" style={{backgroundColor: '#F5F3EF'}}>
       <Header />
       
       <main className="flex-grow container mx-auto px-4 py-8">
         <button
           onClick={() => router.back()}
-          className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-6"
+          className="flex items-center space-x-2 mb-6 hover:opacity-70 transition" style={{color: '#9D4EDD'}}
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
         </button>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden" style={{border: '2px solid #9D4EDD'}}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             {/* Product Image */}
-            <div className="relative h-96 bg-gray-100 rounded-lg overflow-hidden">
+            <div className="relative h-96 rounded-lg overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
               {product.mainImageUrl ? (
                 <Image
                   src={product.mainImageUrl}
@@ -145,7 +145,7 @@ export default function ProductDetailPage() {
                 </div>
               )}
               {product.originalPrice && product.originalPrice > product.price && (
-                <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-bold">
+                <div className="absolute top-4 right-4 text-white px-3 py-1 rounded-lg text-sm font-bold" style={{backgroundColor: '#FF6B35'}}>
                   SALE
                 </div>
               )}
@@ -154,27 +154,27 @@ export default function ProductDetailPage() {
             {/* Product Info */}
             <div>
               {product.category && (
-                <p className="text-sm text-blue-600 font-semibold mb-2">{product.category.name}</p>
+                <p className="text-sm font-semibold mb-2" style={{color: '#9D4EDD'}}>{product.category.name}</p>
               )}
-              <h1 className="text-4xl font-bold mb-4">{product.title}</h1>
+              <h1 className="text-4xl font-bold mb-4" style={{color: '#3C096C'}}>{product.title}</h1>
               
               {/* Pricing */}
               <div className="mb-6">
                 {product.originalPrice && product.originalPrice > product.price ? (
                   <div>
                     <p className="text-lg text-gray-500 line-through">{formatPrice(product.originalPrice)}</p>
-                    <p className="text-3xl font-bold text-red-600">{formatPrice(product.price)}</p>
-                    <p className="text-sm text-green-600 font-semibold">
+                    <p className="text-3xl font-bold" style={{color: '#FF6B35'}}>{formatPrice(product.price)}</p>
+                    <p className="text-sm font-semibold" style={{color: '#9D4EDD'}}>
                       Save {formatPrice(product.originalPrice - product.price)}!
                     </p>
                   </div>
                 ) : (
-                  <p className="text-3xl font-bold text-blue-600">{formatPrice(product.price)}</p>
+                  <p className="text-3xl font-bold" style={{color: '#3C096C'}}>{formatPrice(product.price)}</p>
                 )}
               </div>
 
               {/* Product Details */}
-              <div className="space-y-2 mb-6 text-sm">
+              <div className="space-y-2 mb-6 text-sm" style={{color: '#3C096C'}}>
                 {product.isbn && (
                   <p><span className="font-semibold">ISBN:</span> {product.isbn}</p>
                 )}
@@ -194,17 +194,17 @@ export default function ProductDetailPage() {
 
               {product.description && (
                 <div className="mb-6">
-                  <h2 className="font-semibold text-lg mb-2">Description</h2>
-                  <p className="text-gray-700 leading-relaxed">{product.description}</p>
+                  <h2 className="font-semibold text-lg mb-2" style={{color: '#3C096C'}}>Description</h2>
+                  <p className="leading-relaxed" style={{color: '#3C096C', opacity: 0.8}}>{product.description}</p>
                 </div>
               )}
 
               {product.tags && (
                 <div className="mb-6">
-                  <h2 className="font-semibold text-sm mb-2">Tags</h2>
+                  <h2 className="font-semibold text-sm mb-2" style={{color: '#3C096C'}}>Tags</h2>
                   <div className="flex flex-wrap gap-2">
                     {product.tags.split(',').map((tag, i) => (
-                      <span key={i} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
+                      <span key={i} className="text-white px-3 py-1 rounded-full text-xs" style={{backgroundColor: '#9D4EDD'}}>
                         {tag.trim()}
                       </span>
                     ))}
@@ -215,31 +215,31 @@ export default function ProductDetailPage() {
               {/* Stock Status */}
               <div className="mb-6">
                 {product.available && product.stock > 0 ? (
-                  <p className="text-green-600 font-semibold">
+                  <p className="font-semibold" style={{color: '#9D4EDD'}}>
                     ✓ In Stock ({product.stock} available)
                   </p>
                 ) : (
-                  <p className="text-red-600 font-semibold">✗ Out of Stock</p>
+                  <p className="font-semibold" style={{color: '#FF6B35'}}>✗ Out of Stock</p>
                 )}
               </div>
 
               {/* Quantity Selector */}
               {product.available && product.stock > 0 && (
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{color: '#3C096C'}}>
                     Quantity
                   </label>
                   <div className="flex items-center space-x-4">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+                      className="px-4 py-2 rounded-lg hover:opacity-80 transition" style={{backgroundColor: '#E8DFF5'}}
                     >
                       -
                     </button>
-                    <span className="text-lg font-semibold">{quantity}</span>
+                    <span className="text-lg font-semibold" style={{color: '#3C096C'}}>{quantity}</span>
                     <button
                       onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                      className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition"
+                      className="px-4 py-2 rounded-lg hover:opacity-80 transition" style={{backgroundColor: '#E8DFF5'}}
                     >
                       +
                     </button>
@@ -251,7 +251,8 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={!product.available || product.stock <= 0}
-                className="w-full bg-blue-600 text-white py-4 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-lg font-semibold"
+                className="w-full text-white py-4 rounded-lg hover:opacity-90 transition disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-lg font-semibold"
+                style={{backgroundColor: (!product.available || product.stock <= 0) ? '#9CA3AF' : '#9D4EDD'}}
               >
                 <ShoppingCart className="w-5 h-5" />
                 <span>{product.available && product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}</span>

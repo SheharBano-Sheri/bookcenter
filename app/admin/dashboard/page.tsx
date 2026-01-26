@@ -82,54 +82,74 @@ export default function AdminDashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#CDB4DB]/30 border-t-[#9D4EDD]"></div>
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard Overview</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((stat) => (
-          <div key={stat.title} className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm mb-1">{stat.title}</p>
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-              </div>
-              <div className={`${stat.color} p-3 rounded-lg`}>
-                <stat.icon className="w-8 h-8 text-white" />
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="mb-8">
+        <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-[#CDB4DB] to-[#9D4EDD] bg-clip-text text-transparent mb-2">📊 Dashboard Overview</h1>
+        <p className="text-gray-600">Monitor your store performance</p>
       </div>
 
-      <div className="mt-8 bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {statCards.map((stat, index) => {
+          const gradients = [
+            'from-[#CDB4DB] to-[#9D4EDD]',
+            'from-[#9D4EDD] to-purple-600',
+            'from-[#CDB4DB] to-[#9D4EDD]',
+            'from-[#9D4EDD] to-purple-600'
+          ];
+          return (
+            <div key={stat.title} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 group hover:-translate-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-semibold mb-2">{stat.title}</p>
+                  <p className="text-3xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">{stat.value}</p>
+                </div>
+                <div className={`bg-gradient-to-br ${gradients[index]} p-4 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-12 bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+        <h2 className="text-2xl font-black bg-gradient-to-r from-[#CDB4DB] to-[#9D4EDD] bg-clip-text text-transparent mb-6">⚡ Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <a
             href="/admin/products"
-            className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 hover:bg-blue-100 transition text-center"
+            className="bg-gradient-to-br from-[#CDB4DB]/10 to-[#9D4EDD]/10 border-2 border-[#CDB4DB]/30 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center group"
           >
-            <Package className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-            <p className="font-semibold text-blue-900">Manage Products</p>
+            <div className="bg-gradient-to-r from-[#CDB4DB] to-[#9D4EDD] p-4 rounded-xl inline-block mb-3 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              <Package className="w-8 h-8 text-white" />
+            </div>
+            <p className="font-bold text-lg text-[#3C096C]">Manage Products</p>
+            <p className="text-sm text-[#9D4EDD] mt-1">Add, edit & organize</p>
           </a>
           <a
             href="/admin/categories"
-            className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 hover:bg-purple-100 transition text-center"
+            className="bg-gradient-to-br from-[#9D4EDD]/10 to-purple-600/10 border-2 border-[#9D4EDD]/30 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center group"
           >
-            <FolderTree className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-            <p className="font-semibold text-purple-900">Manage Categories</p>
+            <div className="bg-gradient-to-r from-[#9D4EDD] to-purple-600 p-4 rounded-xl inline-block mb-3 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              <FolderTree className="w-8 h-8 text-white" />
+            </div>
+            <p className="font-bold text-lg text-[#3C096C]">Manage Categories</p>
+            <p className="text-sm text-[#9D4EDD] mt-1">Organize your catalog</p>
           </a>
           <a
             href="/admin/orders"
-            className="bg-green-50 border-2 border-green-200 rounded-lg p-4 hover:bg-green-100 transition text-center"
+            className="bg-gradient-to-br from-[#CDB4DB]/10 to-[#9D4EDD]/10 border-2 border-[#CDB4DB]/30 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 text-center group"
           >
-            <ShoppingBag className="w-8 h-8 text-green-600 mx-auto mb-2" />
-            <p className="font-semibold text-green-900">View Orders</p>
+            <div className="bg-gradient-to-r from-[#CDB4DB] to-[#9D4EDD] p-4 rounded-xl inline-block mb-3 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+              <ShoppingBag className="w-8 h-8 text-white" />
+            </div>
+            <p className="font-bold text-lg text-[#3C096C]">View Orders</p>
+            <p className="text-sm text-[#9D4EDD] mt-1">Track & fulfill</p>
           </a>
         </div>
       </div>
