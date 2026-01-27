@@ -13,14 +13,15 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [featuredProducts, categories] = await Promise.all([
+  /* Fetch Categories - Get enough to filter specifically */
+  const [featuredProducts, allCategories] = await Promise.all([
     prisma.product.findMany({
       take: 8,
       orderBy: { createdAt: "desc" },
       include: { category: true },
     }),
     prisma.category.findMany({
-      take: 5,
+      take: 20, /* Fetch more to ensure we find required ones */
     }),
   ]);
 
@@ -28,16 +29,57 @@ export default async function HomePage() {
   const categoryImages: Record<string, string> = {
     "Books": "/categories/book.png",
     "Book": "/categories/book.png",
-    "Stationery": "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=800&auto=format&fit=crop",
+    "Stationery": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop", // Updated match
+    "Stationary": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop", // Updated match
     "Pencil": "/categories/pencil.png",
     "Pencils": "/categories/pencil.png",
-    "Bags": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
-    "Accessories": "https://images.unsplash.com/photo-1616400619175-5beda3a17896?q=80&w=800&auto=format&fit=crop",
+    "Bags": "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png", // Updated match
+    "Bag": "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png", // Updated match
+    "Accessories": "https://images.unsplash.com/photo-1511556820780-d912e42b4980?q=80&w=800&auto=format&fit=crop", // NEW: Product/Accessories
     "Game": "/categories/game.png",
     "Games": "/categories/game.png",
     "Quran Pak": "/categories/quran.png",
-    "Default": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=800&auto=format&fit=crop"
+    "Default": "https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?q=80&w=800&auto=format&fit=crop" // NEW: Abstract/Interior
   };
+
+  // Filter Categories for "Curated Collections"
+  // STRICT REQUIREMENT: Only 4 specific categories: Bag, Stationery, Canva, Water Bottle.
+  
+  // Define strict items
+  const forcedItems = [
+      { 
+          targetName: "Bag", 
+          alts: ["Bag", "Bags"], 
+          img: "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png" // User defined
+      },
+      { 
+          targetName: "Stationery", 
+          alts: ["Stationery", "Stationary"], 
+          img: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop" // User defined
+      },
+      {
+          targetName: "Canva",
+          alts: ["Canva", "Canvas", "Art", "Painting"],
+          img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop" // Aesthetic Art/Canvas
+      },
+  ];
+
+  // Resolve Items (Find in DB or Mock)
+  // We strictly show these 4.
+  const curatedCategories = forcedItems.map(item => {
+      // Find a matching category in DB just to get an ID if possible
+      const match = allCategories.find(c => item.alts.includes(c.name));
+      
+      return {
+          id: match?.id || `static-${item.targetName.toLowerCase().replace(/\s+/g, '-')}`, 
+          name: item.targetName, 
+          imageUrl: item.img, 
+      };
+  });
+
+  // Keep original categories for the Bento Grid (Our Collections)
+  const categories = allCategories; 
+
 
   return (
     <div className="min-h-screen flex flex-col bg-accent-cream text-gray-00 selection:bg-accent-gold selection:text-white overflow-x-hidden">
@@ -124,8 +166,9 @@ export default async function HomePage() {
              </div>
         </div>
 
-        {/* Horizontal Scroll Section: Featured */}
-        {featuredProducts.length > 0 && <ScrollSection featuredProducts={featuredProducts.slice(0, 5)} />}
+
+        {/* Horizontal Scroll Section: Curated Collections (Now Categories) */}
+        {curatedCategories.length > 0 && <ScrollSection categories={curatedCategories} />}
 
         {/* Bento Grid Categories */}
         {categories.length > 0 && (
