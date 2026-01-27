@@ -223,29 +223,30 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* Product Grid (Remaining Items) */}
-        {featuredProducts.length > 5 && (
-            <section className="py-32 bg-white">
+        {/* Product Grid (More Treasures) */}
+        {featuredProducts.length > 0 && (
+            <section className="py-24 bg-[#FDFBF7]"> 
                 <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-serif text-center mb-16">More Treasures</h2>
+                    <div className="text-center mb-16">
+                        <h2 className="text-5xl md:text-6xl font-serif text-primary-950 mb-4">
+                          More <span className="text-accent-gold italic">Treasures</span>
+                        </h2>
+                        <div className="w-24 h-1 bg-accent-gold mx-auto mt-6"></div>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {featuredProducts.slice(5).map((product) => (
-                           <div key={product.id} className="group">
-                                <div className="aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden mb-4 relative">
-                                    {product.mainImageUrl ? (
-                                        <img src={product.mainImageUrl} alt={product.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-300"><BookOpen/></div>
-                                    )}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                       <Link href={`/products/${product.id}`} className="px-6 py-3 bg-white text-black rounded-full text-sm font-medium hover:bg-accent-gold transition-colors">
-                                          View Item
-                                       </Link>
-                                    </div>
-                                </div>
-                                <h4 className="text-lg font-serif">{product.title}</h4>
-                                <p className="text-gray-500">${product.price.toFixed(2)}</p>
-                           </div>
+                        {featuredProducts.map((product) => (
+                           <ProductCard 
+                                key={product.id}
+                                id={product.id}
+                                title={product.title}
+                                price={product.price}
+                                originalPrice={product.originalPrice}
+                                mainImageUrl={product.mainImageUrl}
+                                stock={product.stock}
+                                categoryName={product.category?.name}
+                                available={true} 
+                           />
                         ))}
                     </div>
                 </div>
