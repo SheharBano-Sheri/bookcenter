@@ -195,7 +195,11 @@ export default function ProductDetailPage() {
               {product.description && (
                 <div className="mb-6">
                   <h2 className="font-semibold text-lg mb-2" style={{color: '#3C096C'}}>Description</h2>
-                  <p className="leading-relaxed" style={{color: '#3C096C', opacity: 0.8}}>{product.description}</p>
+                  <div 
+                    className="leading-relaxed text-gray-700 space-y-2 [&>h2]:text-lg [&>h2]:font-bold [&>h2]:my-2 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1 [&>li]:pl-1 [&>b]:font-bold"
+                    style={{color: '#3C096C', opacity: 0.9}}
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                  />
                 </div>
               )}
 

@@ -19,6 +19,7 @@ export async function GET() {
   }
 }
 
+
 export async function POST(request: Request) {
   try {
     await requireAdmin();
@@ -37,6 +38,7 @@ export async function POST(request: Request) {
       data: {
         name,
         description: description || null,
+        slug: name.trim().toLowerCase().replace(/\s+/g, '-'),
       },
     });
 
@@ -49,5 +51,28 @@ export async function POST(request: Request) {
       { error: 'Failed to create category' },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    await requireAdmin();
+    const body = await request.json();
+    const { ids } = body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json({ error: 'No category IDs provided' }, { status: 400 });
+    }
+
+    await prisma.category.deleteMany({
+      where: { id: { in: ids } },
+    });
+
+    return NextResponse.json({ message: 'Categories deleted successfully' });
+  } catch (error) {
+    if ((error as Error).message === 'Unauthorized') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    return NextResponse.json({ error: 'Failed to delete categories' }, { status: 500 });
   }
 }

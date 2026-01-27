@@ -25,12 +25,12 @@ export async function POST(request: Request) {
     await requireAdmin();
 
     const body = await request.json();
-    const { 
-      title, 
-      description, 
-      price, 
-      mainImageUrl, 
-      stock, 
+    const {
+      title,
+      description,
+      price,
+      mainImageUrl,
+      stock,
       categoryId,
       isbn,
       sku,
@@ -78,6 +78,39 @@ export async function POST(request: Request) {
     }
     return NextResponse.json(
       { error: 'Failed to create product' },
+      { status: 500 }
+    );
+  }
+}
+export async function DELETE(request: Request) {
+  try {
+    await requireAdmin();
+
+    const body = await request.json();
+    const { ids } = body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json(
+        { error: 'No product IDs provided' },
+        { status: 400 }
+      );
+    }
+
+    await prisma.product.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    return NextResponse.json({ message: 'Products deleted successfully' });
+  } catch (error) {
+    if ((error as Error).message === 'Unauthorized') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    return NextResponse.json(
+      { error: 'Failed to delete products' },
       { status: 500 }
     );
   }
