@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 import { ShoppingCart, BookOpen, ChevronDown, Menu } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Categorized data for the Mega Menu
@@ -58,6 +58,11 @@ const MEGA_MENU_CATEGORIES = [
 export default function Header() {
   const totalItems = useCartStore((state) => state.getTotalItems());
   const [isHoveringCategories, setIsHoveringCategories] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-primary-950/95 backdrop-blur-md border-b border-white/10 shadow-xl transition-all duration-300">
@@ -166,7 +171,7 @@ export default function Header() {
               className="relative p-2 text-white/90 hover:text-accent-gold transition-colors group"
             >
               <ShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform" />
-              {totalItems > 0 && (
+              {mounted && totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-950 text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg">
                   {totalItems}
                 </span>
