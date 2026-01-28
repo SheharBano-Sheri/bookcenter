@@ -86,8 +86,8 @@ export default function ProductDetailPage() {
         <Header />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4" style={{borderColor: '#9D4EDD'}}></div>
-            <p style={{color: '#3C096C'}}>Loading product...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4" style={{borderColor: '#D4AF37'}}></div>
+            <p style={{color: '#0f0720'}}>Loading product...</p>
           </div>
         </main>
         <Footer />
@@ -101,10 +101,10 @@ export default function ProductDetailPage() {
         <Header />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <p className="text-lg mb-4" style={{color: '#3C096C'}}>Product not found</p>
+            <p className="text-lg mb-4" style={{color: '#0f0720'}}>Product not found</p>
             <button
               onClick={() => router.push('/products')}
-              className="font-semibold hover:opacity-70 transition" style={{color: '#9D4EDD'}}
+              className="font-semibold hover:opacity-70 transition" style={{color: '#D4AF37'}}
             >
               ← Back to Products
             </button>
@@ -122,13 +122,13 @@ export default function ProductDetailPage() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <button
           onClick={() => router.back()}
-          className="flex items-center space-x-2 mb-6 hover:opacity-70 transition" style={{color: '#9D4EDD'}}
+          className="flex items-center space-x-2 mb-6 hover:opacity-70 transition" style={{color: '#D4AF37'}}
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
         </button>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden" style={{border: '2px solid #9D4EDD'}}>
+        <div className="bg-white rounded-lg shadow-md overflow-hidden" style={{border: '2px solid #D4AF37'}}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             {/* Product Image */}
             <div className="relative h-96 rounded-lg overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
@@ -154,9 +154,11 @@ export default function ProductDetailPage() {
             {/* Product Info */}
             <div>
               {product.category && (
-                <p className="text-sm font-semibold mb-2" style={{color: '#9D4EDD'}}>{product.category.name}</p>
+                <span className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full mb-2" style={{backgroundColor: '#D4AF37'}}>
+                  {product.category.name}
+                </span>
               )}
-              <h1 className="text-4xl font-bold mb-4" style={{color: '#3C096C'}}>{product.title}</h1>
+              <h1 className="text-4xl font-bold mb-4" style={{color: '#0f0720'}}>{product.title}</h1>
               
               {/* Pricing */}
               <div className="mb-6">
@@ -164,17 +166,17 @@ export default function ProductDetailPage() {
                   <div>
                     <p className="text-lg text-gray-500 line-through">{formatPrice(product.originalPrice)}</p>
                     <p className="text-3xl font-bold" style={{color: '#FF6B35'}}>{formatPrice(product.price)}</p>
-                    <p className="text-sm font-semibold" style={{color: '#9D4EDD'}}>
+                    <p className="text-sm font-semibold" style={{color: '#D4AF37'}}>
                       Save {formatPrice(product.originalPrice - product.price)}!
                     </p>
                   </div>
                 ) : (
-                  <p className="text-3xl font-bold" style={{color: '#3C096C'}}>{formatPrice(product.price)}</p>
+                  <p className="text-3xl font-bold" style={{color: '#D4AF37'}}>{formatPrice(product.price)}</p>
                 )}
               </div>
 
               {/* Product Details */}
-              <div className="space-y-2 mb-6 text-sm" style={{color: '#3C096C'}}>
+              <div className="space-y-2 mb-6 text-sm" style={{color: '#0f0720'}}>
                 {product.isbn && (
                   <p><span className="font-semibold">ISBN:</span> {product.isbn}</p>
                 )}
@@ -194,10 +196,10 @@ export default function ProductDetailPage() {
 
               {product.description && (
                 <div className="mb-6">
-                  <h2 className="font-semibold text-lg mb-2" style={{color: '#3C096C'}}>Description</h2>
+                  <h2 className="font-semibold text-lg mb-2" style={{color: '#0f0720'}}>Description</h2>
                   <div 
                     className="leading-relaxed text-gray-700 space-y-2 [&>h2]:text-lg [&>h2]:font-bold [&>h2]:my-2 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1 [&>li]:pl-1 [&>b]:font-bold"
-                    style={{color: '#3C096C', opacity: 0.9}}
+                    style={{color: '#0f0720', opacity: 0.9}}
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   />
                 </div>
@@ -205,10 +207,10 @@ export default function ProductDetailPage() {
 
               {product.tags && (
                 <div className="mb-6">
-                  <h2 className="font-semibold text-sm mb-2" style={{color: '#3C096C'}}>Tags</h2>
+                  <h2 className="font-semibold text-sm mb-2" style={{color: '#0f0720'}}>Tags</h2>
                   <div className="flex flex-wrap gap-2">
                     {product.tags.split(',').map((tag, i) => (
-                      <span key={i} className="text-white px-3 py-1 rounded-full text-xs" style={{backgroundColor: '#9D4EDD'}}>
+                      <span key={i} className="text-white px-3 py-1 rounded-full text-xs" style={{backgroundColor: '#D4AF37'}}>
                         {tag.trim()}
                       </span>
                     ))}
@@ -219,7 +221,7 @@ export default function ProductDetailPage() {
               {/* Stock Status */}
               <div className="mb-6">
                 {product.available && product.stock > 0 ? (
-                  <p className="font-semibold" style={{color: '#9D4EDD'}}>
+                  <p className="font-semibold" style={{color: '#D4AF37'}}>
                     ✓ In Stock ({product.stock} available)
                   </p>
                 ) : (
@@ -230,20 +232,20 @@ export default function ProductDetailPage() {
               {/* Quantity Selector */}
               {product.available && product.stock > 0 && (
                 <div className="mb-6">
-                  <label className="block text-sm font-medium mb-2" style={{color: '#3C096C'}}>
+                  <label className="block text-sm font-medium mb-2" style={{color: '#0f0720'}}>
                     Quantity
                   </label>
                   <div className="flex items-center space-x-4">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-4 py-2 rounded-lg hover:opacity-80 transition" style={{backgroundColor: '#E8DFF5'}}
+                      className="px-4 py-2 rounded-lg hover:opacity-80 transition text-white" style={{backgroundColor: '#D4AF37'}}
                     >
                       -
                     </button>
-                    <span className="text-lg font-semibold" style={{color: '#3C096C'}}>{quantity}</span>
+                    <span className="text-lg font-semibold" style={{color: '#0f0720'}}>{quantity}</span>
                     <button
                       onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                      className="px-4 py-2 rounded-lg hover:opacity-80 transition" style={{backgroundColor: '#E8DFF5'}}
+                      className="px-4 py-2 rounded-lg hover:opacity-80 transition text-white" style={{backgroundColor: '#D4AF37'}}
                     >
                       +
                     </button>
@@ -256,7 +258,7 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
                 disabled={!product.available || product.stock <= 0}
                 className="w-full text-white py-4 rounded-lg hover:opacity-90 transition disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-lg font-semibold"
-                style={{backgroundColor: (!product.available || product.stock <= 0) ? '#9CA3AF' : '#9D4EDD'}}
+                style={{backgroundColor: (!product.available || product.stock <= 0) ? '#9CA3AF' : '#D4AF37'}}
               >
                 <ShoppingCart className="w-5 h-5" />
                 <span>{product.available && product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}</span>
