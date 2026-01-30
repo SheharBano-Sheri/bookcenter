@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const playfair = Playfair_Display({ 
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfair.variable} antialiased font-sans`}>
         {children}
         <Toaster position="top-right" />
+        <WhatsAppButton />
       </body>
     </html>
   );
