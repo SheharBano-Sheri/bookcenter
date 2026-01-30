@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -20,9 +20,9 @@ export default function Footer() {
               Your trusted destination for curated literature, premium stationery, and educational excellence since 1995.
             </p>
             <div className="flex gap-4 pt-4">
-              <SocialLink icon={<Facebook className="w-5 h-5"/>} href="#" />
-              <SocialLink icon={<Twitter className="w-5 h-5"/>} href="#" />
-              <SocialLink icon={<Instagram className="w-5 h-5"/>} href="#" />
+              <SocialLink icon={<Facebook className="w-5 h-5"/>} href="https://www.facebook.com/zubairbookdepot1" />
+              <SocialLink icon={<Linkedin className="w-5 h-5"/>} href="https://www.linkedin.com/in/zubair-book-center-vehari-451674273/" />
+              <SocialLink icon={<Instagram className="w-5 h-5"/>} href="https://www.instagram.com/zubairbooks?igsh=a21qNTVqb3Z6MXJr" />
             </div>
           </div>
 
@@ -54,15 +54,15 @@ export default function Footer() {
              <ul className="space-y-4">
                <li className="flex items-start gap-4 text-white/60">
                   <MapPin className="w-5 h-5 text-accent-gold shrink-0 mt-1" />
-                  <span>123 Education St, Knowledge City, Academic District</span>
+                  <span>Zia Shaheed Road, C Block, Vehari</span>
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Phone className="w-5 h-5 text-accent-gold shrink-0" />
-                  <span>+1 234 567 8900</span>
+                  <span>+923033130888</span>
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Mail className="w-5 h-5 text-accent-gold shrink-0" />
-                  <span>info@bookcenter.com</span>
+                  <span>info@bookcentre.com</span>
                </li>
              </ul>
           </div>

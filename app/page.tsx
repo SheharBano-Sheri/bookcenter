@@ -103,7 +103,7 @@ export default async function HomePage() {
                 <FadeIn>
                     <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary-100 bg-white/60 backdrop-blur-md mb-8 shadow-sm">
                         <Sparkles className="w-4 h-4 text-accent-gold" />
-                        <span className="tracking-[0.2em] uppercase text-[10px] font-bold text-primary-800">Established 1995</span>
+                        <span className="tracking-[0.2em] uppercase text-[10px] font-bold text-primary-800">Since 1995</span>
                     </div>
                 </FadeIn>
 
