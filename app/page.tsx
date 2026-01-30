@@ -178,47 +178,49 @@ export default async function HomePage() {
                   <span className="text-accent-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Departments</span>
                   <h2 className="text-6xl font-serif text-primary-950">Our Collections</h2>
                </div>
+                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-[300px_300px] gap-4">
+                  {categories.slice(0, 4).map((category, i) => {
+                    const bgImage = categoryImages[category.name] || categoryImages["Default"];
+                    const isLarge = i === 0 || i === 3; 
 
-               <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-[300px_300px] gap-4">
-                  {categories.slice(0, 5).map((category, i) => {
-                      const bgImage = categoryImages[category.name] || categoryImages["Default"];
-                      const isLarge = i === 0 || i === 3; // Make 1st and 4th item large
-                      
-                      return (
-                        <Link 
-                            key={category.id} 
-                            href={`/products?category=${category.name}`}
-                            className={`group relative rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-primary-900/20 transition-all duration-700
-                                ${isLarge ? 'md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'}
-                            `}
-                        >
-                            {/* Background Image */}
-                            <div 
-                                className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
-                                style={{ backgroundImage: `url(${bgImage})` }}
-                            ></div>
-                            
-                            {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
-                            
-                            {/* Content */}
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                                <h3 className={`font-serif text-white mb-2 leading-none group-hover:text-accent-gold transition-colors
-                                    ${isLarge ? 'text-5xl' : 'text-3xl'}
-                                `}>
-                                    {category.name}
-                                </h3>
-                                <div className="h-px w-12 bg-white/50 group-hover:w-full transition-all duration-500"></div>
-                            </div>
-                            
-                            {/* Hover Reveal Button */}
-                            <div className="absolute top-8 right-8 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                <ArrowRight className="w-5 h-5" />
-                            </div>
-                        </Link>
-                      );
+                    return (
+                      <Link 
+                        key={category.id} 
+                        href={`/products?category=${category.name}`}
+                        className={`group relative rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-primary-900/20 transition-all duration-700
+                            /* Added min-height for mobile so items aren't squashed */
+                            min-h-[300px]
+                            ${isLarge ? 'md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'}
+                        `}
+                      >
+                        {/* Background Image */}
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                          style={{ backgroundImage: `url(${bgImage})` }}
+                        ></div>
+
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                        
+                        {/* Content */}
+                        <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                          <h3 className={`font-serif text-white mb-2 leading-none group-hover:text-accent-gold transition-colors
+                              /* Adjusted text size for mobile vs desktop */
+                              ${isLarge ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'}
+                          `}>
+                              {category.name}
+                          </h3>
+                          <div className="h-px w-12 bg-white/50 group-hover:w-full transition-all duration-500"></div>
+                        </div>
+                        
+                        {/* Hover Reveal Button */}
+                        <div className="absolute top-8 right-8 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                            <ArrowRight className="w-5 h-5" />
+                        </div>
+                      </Link>
+                    );
                   })}
-               </div>
+                </div>
             </div>
           </section>
         )}
