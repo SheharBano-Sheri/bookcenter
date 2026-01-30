@@ -184,13 +184,13 @@ export default function CartPage() {
                         </div>
                     </div>
 
-                    <button
+                    {/* <button
                         onClick={() => router.push('/checkout')}
                         className="w-full bg-primary-950 text-white py-4 rounded-full hover:bg-primary-900 hover:scale-[1.02] transition-all duration-300 shadow-lg shadow-primary-950/20 font-serif text-lg flex items-center justify-center gap-2 group"
                     >
                         Checkout
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </button> */}
 
                     <button
                         onClick={handleWhatsAppCheckout}
