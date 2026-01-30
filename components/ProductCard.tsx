@@ -43,7 +43,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="group relative rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2" style={{backgroundColor: '#F5F3EF', border: '2px solid #9D4EDD'}}>
+    <div className="group relative rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2" style={{backgroundColor: '#F5F3EF', border: '2px solid #D4AF37'}}>
       <Link href={`/products/${id}`}>
         <div className="relative h-64 overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
           {mainImageUrl ? (
@@ -74,12 +74,12 @@ export default function ProductCard({
       
       <div className="p-5">
         {categoryName && (
-          <span className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full mb-2" style={{backgroundColor: '#9D4EDD'}}>
+          <span className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full mb-2" style={{backgroundColor: '#D4AF37'}}>
             {categoryName}
           </span>
         )}
         <Link href={`/products/${id}`}>
-          <h3 className="font-bold text-lg mb-3 hover:opacity-70 transition line-clamp-2 min-h-[3.5rem]" style={{color: '#3C096C'}}>
+          <h3 className="font-bold text-lg mb-3 hover:opacity-70 transition line-clamp-2 min-h-[3.5rem]" style={{color: '#0f0720'}}>
             {title}
           </h3>
         </Link>
@@ -92,14 +92,14 @@ export default function ProductCard({
                 <span className="text-2xl font-black" style={{color: '#FF6B35'}}>{formatPrice(price)}</span>
               </div>
             ) : (
-              <span className="text-2xl font-black" style={{color: '#3C096C'}}>{formatPrice(price)}</span>
+              <span className="text-2xl font-black" style={{color: '#D4AF37'}}>{formatPrice(price)}</span>
             )}
           </div>
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             className="text-white px-5 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:cursor-not-allowed flex items-center space-x-2 font-semibold"
-            style={{backgroundColor: isOutOfStock ? '#9CA3AF' : '#9D4EDD'}}
+            style={{backgroundColor: isOutOfStock ? '#9CA3AF' : '#D4AF37'}}
           >
             <ShoppingCart className="w-4 h-4" />
             <span>Add</span>

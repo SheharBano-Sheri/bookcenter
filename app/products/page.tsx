@@ -58,15 +58,15 @@ export default async function ProductsPage({
       
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-black mb-2" style={{color: '#3C096C', fontStyle: 'italic'}}>
+          <h1 className="text-4xl md:text-5xl font-black mb-2" style={{color: '#0f0720', fontStyle: 'italic'}}>
             {category ? `${category}` : 'All Products'}
           </h1>
-          <p style={{color: '#3C096C', opacity: 0.7}}>✨ Discover our amazing collection</p>
+          <p style={{color: '#0f0720', opacity: 0.7}}>✨ Discover our amazing collection</p>
         </div>
 
         {/* Filters */}
-        <div className="rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 mb-8" style={{backgroundColor: 'white', border: '2px solid #9D4EDD'}}>
-          <h2 className="text-xl font-bold mb-6" style={{color: '#3C096C', fontStyle: 'italic'}}>🔍 Filter Products</h2>
+        <div className="rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 mb-8" style={{backgroundColor: 'white', border: '2px solid #D4AF37'}}>
+          <h2 className="text-xl font-bold mb-6" style={{color: '#0f0720', fontStyle: 'italic'}}>🔍 Filter Products</h2>
           <form method="get" className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Search */}
             <div>
@@ -78,7 +78,7 @@ export default async function ProductsPage({
                 name="search"
                 defaultValue={search}
                 placeholder="Search by name..."
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-[#D4AF37] hover:border-[#D4AF37] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -90,7 +90,7 @@ export default async function ProductsPage({
               <select
                 name="category"
                 defaultValue={category || ''}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#D4AF37] hover:border-[#D4AF37] transition-colors" style={{outline: 'none'}}
               >
                 <option value="">All Categories</option>
                 {categories.map((cat) => (
@@ -113,7 +113,7 @@ export default async function ProductsPage({
                 min="0"
                 step="0.01"
                 placeholder="0.00"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#D4AF37] hover:border-[#D4AF37] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -129,7 +129,7 @@ export default async function ProductsPage({
                 min="0"
                 step="0.01"
                 placeholder="999.99"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#9D4EDD] hover:border-[#9D4EDD] transition-colors" style={{outline: 'none'}}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:border-[#D4AF37] hover:border-[#D4AF37] transition-colors" style={{outline: 'none'}}
               />
             </div>
 
@@ -137,7 +137,7 @@ export default async function ProductsPage({
             <div className="md:col-span-4">
               <button
                 type="submit"
-                className="text-white px-8 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 font-semibold" style={{backgroundColor: '#9D4EDD'}}
+                className="text-white px-8 py-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 font-semibold" style={{backgroundColor: '#D4AF37'}}
               >
                 <Search className="w-5 h-5" />
                 <span>Apply Filters</span>

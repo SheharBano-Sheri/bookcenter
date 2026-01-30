@@ -13,14 +13,15 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [featuredProducts, categories] = await Promise.all([
+  /* Fetch Categories - Get enough to filter specifically */
+  const [featuredProducts, allCategories] = await Promise.all([
     prisma.product.findMany({
       take: 8,
       orderBy: { createdAt: "desc" },
       include: { category: true },
     }),
     prisma.category.findMany({
-      take: 5,
+      take: 20, /* Fetch more to ensure we find required ones */
     }),
   ]);
 
@@ -28,16 +29,57 @@ export default async function HomePage() {
   const categoryImages: Record<string, string> = {
     "Books": "/categories/book.png",
     "Book": "/categories/book.png",
-    "Stationery": "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=800&auto=format&fit=crop",
+    "Stationery": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop", // Updated match
+    "Stationary": "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop", // Updated match
     "Pencil": "/categories/pencil.png",
     "Pencils": "/categories/pencil.png",
-    "Bags": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
-    "Accessories": "https://images.unsplash.com/photo-1616400619175-5beda3a17896?q=80&w=800&auto=format&fit=crop",
+    "Bags": "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png", // Updated match
+    "Bag": "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png", // Updated match
+    "Accessories": "https://images.unsplash.com/photo-1511556820780-d912e42b4980?q=80&w=800&auto=format&fit=crop", // NEW: Product/Accessories
     "Game": "/categories/game.png",
     "Games": "/categories/game.png",
     "Quran Pak": "/categories/quran.png",
-    "Default": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=800&auto=format&fit=crop"
+    "Default": "https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?q=80&w=800&auto=format&fit=crop" // NEW: Abstract/Interior
   };
+
+  // Filter Categories for "Curated Collections"
+  // STRICT REQUIREMENT: Only 4 specific categories: Bag, Stationery, Canva, Water Bottle.
+  
+  // Define strict items
+  const forcedItems = [
+      { 
+          targetName: "Bag", 
+          alts: ["Bag", "Bags"], 
+          img: "https://www.pngkey.com/png/detail/87-875146_school-bag-png-picture-waterproof-school-backpack-assorted.png" // User defined
+      },
+      { 
+          targetName: "Stationery", 
+          alts: ["Stationery", "Stationary"], 
+          img: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop" // User defined
+      },
+      {
+          targetName: "Canva",
+          alts: ["Canva", "Canvas", "Art", "Painting"],
+          img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop" // Aesthetic Art/Canvas
+      },
+  ];
+
+  // Resolve Items (Find in DB or Mock)
+  // We strictly show these 4.
+  const curatedCategories = forcedItems.map(item => {
+      // Find a matching category in DB just to get an ID if possible
+      const match = allCategories.find(c => item.alts.includes(c.name));
+      
+      return {
+          id: match?.id || `static-${item.targetName.toLowerCase().replace(/\s+/g, '-')}`, 
+          name: item.targetName, 
+          imageUrl: item.img, 
+      };
+  });
+
+  // Keep original categories for the Bento Grid (Our Collections)
+  const categories = allCategories; 
+
 
   return (
     <div className="min-h-screen flex flex-col bg-accent-cream text-gray-00 selection:bg-accent-gold selection:text-white overflow-x-hidden">
@@ -124,8 +166,9 @@ export default async function HomePage() {
              </div>
         </div>
 
-        {/* Horizontal Scroll Section: Featured */}
-        {featuredProducts.length > 0 && <ScrollSection featuredProducts={featuredProducts.slice(0, 5)} />}
+
+        {/* Horizontal Scroll Section: Curated Collections (Now Categories) */}
+        {curatedCategories.length > 0 && <ScrollSection categories={curatedCategories} />}
 
         {/* Bento Grid Categories */}
         {categories.length > 0 && (
@@ -180,29 +223,30 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* Product Grid (Remaining Items) */}
-        {featuredProducts.length > 5 && (
-            <section className="py-32 bg-white">
+        {/* Product Grid (More Treasures) */}
+        {featuredProducts.length > 0 && (
+            <section className="py-24 bg-[#FDFBF7]"> 
                 <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-serif text-center mb-16">More Treasures</h2>
+                    <div className="text-center mb-16">
+                        <h2 className="text-5xl md:text-6xl font-serif text-primary-950 mb-4">
+                          More <span className="text-accent-gold italic">Treasures</span>
+                        </h2>
+                        <div className="w-24 h-1 bg-accent-gold mx-auto mt-6"></div>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {featuredProducts.slice(5).map((product) => (
-                           <div key={product.id} className="group">
-                                <div className="aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden mb-4 relative">
-                                    {product.mainImageUrl ? (
-                                        <img src={product.mainImageUrl} alt={product.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-300"><BookOpen/></div>
-                                    )}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                       <Link href={`/products/${product.id}`} className="px-6 py-3 bg-white text-black rounded-full text-sm font-medium hover:bg-accent-gold transition-colors">
-                                          View Item
-                                       </Link>
-                                    </div>
-                                </div>
-                                <h4 className="text-lg font-serif">{product.title}</h4>
-                                <p className="text-gray-500">${product.price.toFixed(2)}</p>
-                           </div>
+                        {featuredProducts.map((product) => (
+                           <ProductCard 
+                                key={product.id}
+                                id={product.id}
+                                title={product.title}
+                                price={product.price}
+                                originalPrice={product.originalPrice}
+                                mainImageUrl={product.mainImageUrl}
+                                stock={product.stock}
+                                categoryName={product.category?.name}
+                                available={true} 
+                           />
                         ))}
                     </div>
                 </div>
