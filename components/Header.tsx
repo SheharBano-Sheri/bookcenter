@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
-import { ShoppingCart, BookOpen, ChevronDown, Menu } from 'lucide-react';
+import { ShoppingCart, BookOpen, ChevronDown, Menu, X, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -58,6 +58,8 @@ const MEGA_MENU_CATEGORIES = [
 export default function Header() {
   const totalItems = useCartStore((state) => state.getTotalItems());
   const [isHoveringCategories, setIsHoveringCategories] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -178,13 +180,86 @@ export default function Header() {
               )}
             </Link>
 
-             {/* Mobile Menu Button (Simplified for now) */}
-             <button className="md:hidden text-white">
-               <Menu />
+          
+            {/* Mobile Menu Button */}
+             <button 
+                className="md:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50 relative"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
+             >
+               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
              </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl md:hidden max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex flex-col p-4 bg-white">
+              <Link 
+                href="/"
+                className="px-4 py-3 text-lg font-medium text-primary-950 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/products"
+                className="px-4 py-3 text-lg font-medium text-primary-950 hover:bg-gray-50 rounded-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Products
+              </Link>
+              
+              <div className="px-4 py-2">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Categories</h3>
+                <div className="space-y-1">
+                  {MEGA_MENU_CATEGORIES.map((section, idx) => (
+                    <div key={idx} className="border-b border-gray-50 last:border-0">
+                      <button
+                        onClick={() => setExpandedCategory(expandedCategory === section.title ? null : section.title)}
+                        className="flex items-center justify-between w-full py-3 text-left text-primary-950 font-medium hover:text-accent-gold transition-colors"
+                      >
+                        {section.title}
+                        <ChevronRight className={`w-4 h-4 transition-transform duration-200 ${expandedCategory === section.title ? 'rotate-90 text-accent-gold' : 'text-gray-400'}`} />
+                      </button>
+                      <AnimatePresence>
+                        {expandedCategory === section.title && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden bg-gray-50 rounded-lg"
+                          >
+                            {section.items.map((item, i) => (
+                              <li key={i}>
+                                <Link
+                                  href={`/products?category=${encodeURIComponent(item)}`}
+                                  className="block px-4 py-2 text-sm text-gray-600 hover:text-accent-gold pl-8"
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  {item}
+                                </Link>
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
