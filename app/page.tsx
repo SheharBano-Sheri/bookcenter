@@ -43,7 +43,7 @@ export default async function HomePage() {
   };
 
   // Filter Categories for "Curated Collections"
-  // STRICT REQUIREMENT: Only 4 specific categories: Bag, Stationery, Canva, Water Bottle.
+  // STRICT REQUIREMENT: Only 4 specific categories: Bag, Stationery, Canvas, Water Bottle.
   
   // Define strict items
   const forcedItems = [
@@ -58,8 +58,8 @@ export default async function HomePage() {
           img: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=800&auto=format&fit=crop" // User defined
       },
       {
-          targetName: "Canva",
-          alts: ["Canva", "Canvas", "Art", "Painting"],
+          targetName: "Canvas",
+          alts: ["Canvas", "Canva", "Art", "Painting"],
           img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop" // Aesthetic Art/Canvas
       },
   ];
@@ -103,7 +103,7 @@ export default async function HomePage() {
                 <FadeIn>
                     <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary-100 bg-white/60 backdrop-blur-md mb-8 shadow-sm">
                         <Sparkles className="w-4 h-4 text-accent-gold" />
-                        <span className="tracking-[0.2em] uppercase text-[10px] font-bold text-primary-800">Since 1995</span>
+                        <span className="tracking-[0.2em] uppercase text-[10px] font-bold text-primary-800">Since 1992</span>
                     </div>
                 </FadeIn>
 

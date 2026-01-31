@@ -26,7 +26,7 @@ export default function Footer() {
               Zubair <span className="text-accent-gold italic">Book Center</span>
             </h3>
             <p className="text-white/60 leading-relaxed max-w-sm">
-              Your trusted destination for curated literature, premium stationery, and educational excellence since 1995.
+              Your trusted destination for curated literature, premium stationery, and educational excellence since 1992.
             </p>
             <div className="flex gap-4 pt-4">
               <SocialLink icon={<Facebook className="w-5 h-5"/>} href="https://www.facebook.com/zubairbookdepot1" />
