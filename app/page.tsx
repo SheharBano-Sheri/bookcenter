@@ -109,7 +109,7 @@ export default async function HomePage() {
 
                 <FadeIn delay={0.2}>
                     <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-medium tracking-tight mb-6 text-primary-950 leading-[0.9]">
-                        Zubair <br /> Book Center
+                        Zubair <br /> Book Depot
                     </h1>
                 </FadeIn>
 

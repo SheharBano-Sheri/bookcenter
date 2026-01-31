@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="md:col-span-4 space-y-6">
             <Link href="/" className="inline-block relative w-[180px] h-[50px] mb-4">
                  <Image 
-                    src="/logo.png" 
+                    src="/logo-w.jpg.jpeg" 
                     alt="Zubair Book Center" 
                     fill
                     className="object-contain object-left"
