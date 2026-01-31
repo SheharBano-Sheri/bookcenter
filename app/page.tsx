@@ -136,15 +136,15 @@ export default async function HomePage() {
                   <FadeIn delay={0.5} className="relative z-10">
                      <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] rounded-[2rem] overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 ease-out border-[8px] border-white">
                         <img 
-                            src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" 
+                            src="/welcomeimg.png" 
                             alt="Featured Book" 
                             className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000"
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent"></div>
-                         <div className="absolute bottom-6 left-6 text-white font-serif">
+                         {/* <div className="absolute bottom-6 left-6 text-white font-serif">
                              <p className="text-sm uppercase tracking-widest mb-1 text-accent-gold">Featured</p>
                              <p className="text-2xl">The Art of Design</p>
-                         </div>
+                         </div> */}
                      </div>
                   </FadeIn>
                   
