@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCartStore } from '@/lib/store';
-import { ShoppingCart, BookOpen, ChevronDown, Menu, X, ChevronRight } from 'lucide-react';
+import { ShoppingCart, ChevronDown, Menu, X, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -67,18 +68,21 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-primary-950/95 backdrop-blur-md border-b border-white/10 shadow-xl transition-all duration-300">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="p-2 bg-accent-gold/10 rounded-lg group-hover:bg-accent-gold/20 transition-colors">
-                 <BookOpen className="w-6 h-6 text-accent-gold" />
+            <div className="relative w-[180px] h-[50px]">
+                 <Image 
+                    src="/logo.png" 
+                    alt="Zubair Book Center" 
+                    fill
+                    className="object-contain object-left"
+                    priority
+                 />
             </div>
-            <span className="text-xl md:text-2xl font-serif font-bold text-white tracking-tight">
-              Zubair <span className="text-accent-gold italic">Book Center</span>
-            </span>
           </Link>
 
           {/* Navigation - Desktop */}
@@ -87,7 +91,7 @@ export default function Header() {
             {/* Home Link */}
             <Link 
                 href="/" 
-                className="text-white/90 hover:text-accent-gold font-medium text-sm tracking-wide uppercase transition-colors"
+                className="text-primary-950/90 hover:text-accent-gold font-medium text-sm tracking-wide uppercase transition-colors"
             >
               Home
             </Link>
@@ -95,7 +99,7 @@ export default function Header() {
             {/* Products Link */}
             <Link 
                 href="/products" 
-                className="text-white/90 hover:text-accent-gold font-medium text-sm tracking-wide uppercase transition-colors"
+                className="text-primary-950/90 hover:text-accent-gold font-medium text-sm tracking-wide uppercase transition-colors"
             >
               Products
             </Link>
@@ -108,7 +112,7 @@ export default function Header() {
             >
                 <button 
                     className={`flex items-center space-x-1 font-medium text-sm tracking-wide uppercase transition-colors py-4
-                        ${isHoveringCategories ? 'text-accent-gold' : 'text-white/90'}
+                        ${isHoveringCategories ? 'text-accent-gold' : 'text-primary-950/90'}
                     `}
                 >
                     <span>Categories</span>
@@ -170,7 +174,7 @@ export default function Header() {
           <div className="flex items-center space-x-6">
             <Link
               href="/cart"
-              className="relative p-2 text-white/90 hover:text-accent-gold transition-colors group"
+              className="relative p-2 text-primary-950/90 hover:text-accent-gold transition-colors group"
             >
               <ShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform" />
               {mounted && totalItems > 0 && (
@@ -183,7 +187,7 @@ export default function Header() {
           
             {/* Mobile Menu Button */}
              <button 
-                className="md:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50 relative"
+                className="md:hidden text-primary-950 p-2 hover:bg-black/5 rounded-full transition-colors z-50 relative"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
              >

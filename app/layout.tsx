@@ -19,6 +19,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Book Center - Books, Stationery & Educational Supplies",
   description: "Your one-stop shop for books, stationery, school bags, and educational products",
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({
