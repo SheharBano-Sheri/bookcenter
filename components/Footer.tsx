@@ -26,7 +26,7 @@ export default function Footer() {
               Zubair <span className="text-accent-gold italic">Book Center</span>
             </h3>
             <p className="text-white/60 leading-relaxed max-w-sm">
-              Your trusted destination for curated literature, premium stationery, and educational excellence since 1995.
+              Your trusted destination for curated literature, premium stationery, and educational excellence since 1992.
             </p>
             <div className="flex gap-4 pt-4">
               <SocialLink icon={<Facebook className="w-5 h-5"/>} href="https://www.facebook.com/zubairbookdepot1" />
@@ -63,7 +63,7 @@ export default function Footer() {
              <ul className="space-y-4">
                <li className="flex items-start gap-4 text-white/60">
                   <MapPin className="w-5 h-5 text-accent-gold shrink-0 mt-1" />
-                  <span>Zia Shaheed Road, C Block, Vehari</span>
+                  <span>Mian Plaza, Zia Shaheed Road, C Block, Vehari</span>
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Phone className="w-5 h-5 text-accent-gold shrink-0" />
@@ -71,7 +71,7 @@ export default function Footer() {
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Mail className="w-5 h-5 text-accent-gold shrink-0" />
-                  <span>info@zubairbookcentre.com</span>
+                  <span>zubairbookvr@gmail.com</span>
                </li>
              </ul>
           </div>
