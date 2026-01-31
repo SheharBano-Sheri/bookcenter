@@ -54,7 +54,7 @@ export default function Footer() {
              <ul className="space-y-4">
                <li className="flex items-start gap-4 text-white/60">
                   <MapPin className="w-5 h-5 text-accent-gold shrink-0 mt-1" />
-                  <span>Zia Shaheed Road, C Block, Vehari</span>
+                  <span>Mian Plaza, Zia Shaheed Road, C Block, Vehari</span>
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Phone className="w-5 h-5 text-accent-gold shrink-0" />
@@ -62,7 +62,7 @@ export default function Footer() {
                </li>
                <li className="flex items-center gap-4 text-white/60">
                   <Mail className="w-5 h-5 text-accent-gold shrink-0" />
-                  <span>info@zubairbookcentre.com</span>
+                  <span>zubairbookvr@gmail.com</span>
                </li>
              </ul>
           </div>
