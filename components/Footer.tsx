@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
@@ -13,7 +14,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
           {/* Brand Column */}
           <div className="md:col-span-4 space-y-6">
-            <h3 className="text-3xl font-serif text-white tracking-tight">
+            <Link href="/" className="inline-block relative w-[180px] h-[50px] mb-4">
+                 <Image 
+                    src="/logo.png" 
+                    alt="Zubair Book Center" 
+                    fill
+                    className="object-contain object-left"
+                 />
+            </Link>
+            <h3 className="text-3xl font-serif text-white tracking-tight sr-only">
               Zubair <span className="text-accent-gold italic">Book Center</span>
             </h3>
             <p className="text-white/60 leading-relaxed max-w-sm">
