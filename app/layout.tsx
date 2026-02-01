@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Book Center - Books, Stationery & Educational Supplies",
+  title: "Shop stationary items Online | Top Online stationary shop.",
   description: "Your one-stop shop for books, stationery, school bags, and educational products",
   icons: {
     icon: '/logo.png',
