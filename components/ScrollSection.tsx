@@ -21,7 +21,7 @@ export function ScrollSection({ categories }: { categories: any[] }) {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {categories.map((category, index) => (
                 <FadeIn key={category.id} delay={index * 0.1}>
                     <Link href={`/products?category=${category.name}`}>
@@ -37,17 +37,17 @@ export function ScrollSection({ categories }: { categories: any[] }) {
                             </div>
 
                             {/* Content */}
-                            <div className="absolute inset-0 flex flex-col justify-end p-8">
-                                <span className="text-accent-gold text-xs uppercase tracking-widest mb-2 font-bold translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
+                                <span className="text-accent-gold text-[10px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 font-bold translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                                     Explore
                                 </span>
-                                <h3 className="text-2xl font-serif text-white mb-2 leading-tight">{category.name}</h3>
-                                <div className="flex items-center justify-between mt-2">
-                                    <p className="text-white/90 text-lg font-medium">Collection</p>
+                                <h3 className="text-lg md:text-2xl font-serif text-white mb-1 md:mb-2 leading-tight">{category.name}</h3>
+                                <div className="flex items-center justify-between mt-1 md:mt-2">
+                                    <p className="text-white/90 text-sm md:text-lg font-medium">Collection</p>
                                     <div
-                                        className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-accent-gold border border-white/30 transition-colors"
+                                        className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-accent-gold border border-white/30 transition-colors"
                                     >
-                                        <ArrowRight className="w-5 h-5"/>
+                                        <ArrowRight className="w-4 h-4 md:w-5 md:h-5"/>
                                     </div>
                                 </div>
                             </div>
