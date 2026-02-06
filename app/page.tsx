@@ -86,6 +86,22 @@ export default async function HomePage() {
       <Header />
 
       <main className="flex-grow">
+        {/* Marquee Separator */}
+        <div className="relative py-4 bg-primary-950 overflow-hidden">
+          <div className="flex whitespace-nowrap animate-marquee text-white select-none">
+            {[...Array(8)].map((_, i) => (
+              <span
+                key={i}
+                className="text-sm md:text-base font-serif italic mx-4"
+              >
+                LITERATURE • STATIONERY • ART • ACADEMIA •
+              </span>
+            ))}
+          </div>
+        </div>
+
+
+
         {/* Hero Section: Zubair Book Center */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
            {/* Background Parallax Layer */}
@@ -156,15 +172,7 @@ export default async function HomePage() {
         </section>
 
         {/* Marquee Separator */}
-        <div className="relative py-8 bg-primary-950 overflow-hidden transform -skew-y-2 origin-top-left z-20">
-             <div className="flex whitespace-nowrap animate-marquee text-white/20 select-none">
-                {[...Array(8)].map((_, i) => (
-                    <span key={i} className="text-4xl font-serif italic mx-8">
-                        LITERATURE • STATIONERY • ART • ACADEMIA •
-                    </span>
-                ))}
-             </div>
-        </div>
+        
 
 
         {/* Horizontal Scroll Section: Curated Collections (Now Categories) */}
