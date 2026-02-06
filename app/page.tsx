@@ -89,7 +89,7 @@ export default async function HomePage() {
         {/* Marquee Separator */}
         <div className="relative py-4 bg-primary-950 overflow-hidden">
           <div className="flex whitespace-nowrap animate-marquee text-white select-none">
-            {[...Array(8)].map((_, i) => (
+            {[...Array(16)].map((_, i) => (
               <span
                 key={i}
                 className="text-sm md:text-base font-serif italic mx-4"
