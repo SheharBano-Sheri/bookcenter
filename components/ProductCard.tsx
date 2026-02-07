@@ -45,7 +45,7 @@ export default function ProductCard({
   return (
     <div className="group relative rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2" style={{backgroundColor: '#F5F3EF', border: '2px solid #D4AF37'}}>
       <Link href={`/products/${id}`}>
-        <div className="relative h-64 overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
+        <div className="relative h-40 md:h-64 overflow-hidden" style={{backgroundColor: '#FFF9F5'}}>
           {mainImageUrl ? (
             <Image
               src={mainImageUrl}
@@ -72,33 +72,33 @@ export default function ProductCard({
         </div>
       </Link>
       
-      <div className="p-5">
+      <div className="p-3 md:p-5">
         {categoryName && (
           <span className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full mb-2" style={{backgroundColor: '#D4AF37'}}>
             {categoryName}
           </span>
         )}
         <Link href={`/products/${id}`}>
-          <h3 className="font-bold text-lg mb-3 hover:opacity-70 transition line-clamp-2 min-h-[3.5rem]" style={{color: '#0f0720'}}>
+          <h3 className="font-bold text-sm md:text-lg mb-2 md:mb-3 hover:opacity-70 transition line-clamp-2 min-h-[2.5rem] md:min-h-[3.5rem]" style={{color: '#0f0720'}}>
             {title}
           </h3>
         </Link>
         
-        <div className="flex items-end justify-between mt-4">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mt-4 gap-2 md:gap-0">
           <div>
             {originalPrice && originalPrice > price ? (
               <div className="flex flex-col">
-                <span className="text-sm text-gray-400 line-through">{formatPrice(originalPrice)}</span>
-                <span className="text-2xl font-black" style={{color: '#FF6B35'}}>{formatPrice(price)}</span>
+                <span className="text-xs md:text-sm text-gray-400 line-through">{formatPrice(originalPrice)}</span>
+              <span className="text-lg md:text-2xl font-black" style={{color: '#FF6B35'}}>{formatPrice(price)}</span>
               </div>
             ) : (
-              <span className="text-2xl font-black" style={{color: '#D4AF37'}}>{formatPrice(price)}</span>
+              <span className="text-lg md:text-2xl font-black" style={{color: '#D4AF37'}}>{formatPrice(price)}</span>
             )}
           </div>
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className="text-white px-5 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:cursor-not-allowed flex items-center space-x-2 font-semibold"
+            className="w-full md:w-auto text-white px-3 py-2 md:px-5 md:py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:cursor-not-allowed flex items-center justify-center md:justify-start space-x-2 font-semibold text-sm md:text-base"
             style={{backgroundColor: isOutOfStock ? '#9CA3AF' : '#D4AF37'}}
           >
             <ShoppingCart className="w-4 h-4" />
