@@ -79,7 +79,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40">
-           <p>&copy; {new Date().getFullYear()} Zubair Book Center. All rights reserved.</p>
+           <p>&copy; {new Date().getFullYear()} Zubair Book Depot. All rights reserved.</p>
            <div className="flex gap-8">
              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
