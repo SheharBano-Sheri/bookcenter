@@ -3,12 +3,12 @@ import { prisma } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ScrollSection, FadeIn } from "@/components/ScrollSection";
+import { ScrollSection } from "@/components/ScrollSection";
 import {
-  Sparkles,
   ArrowRight,
-  BookOpen,
 } from "lucide-react";
+
+import HeroCarousel from "@/components/HeroCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +24,15 @@ export default async function HomePage() {
       take: 20, /* Fetch more to ensure we find required ones */
     }),
   ]);
+
+  // Hero Images
+  const heroImages = [
+    "/P1.jpeg",
+    "/P2.jpeg",
+    "/P3.jpeg",
+    "/P4.jpeg",
+    "/P5.jpeg",
+  ];
 
   // Aesthetic Images for Categories
   const categoryImages: Record<string, string> = {
@@ -103,72 +112,8 @@ export default async function HomePage() {
 
 
         {/* Hero Section: Zubair Book Center */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-           {/* Background Parallax Layer */}
-           <div className="absolute inset-0 z-0">
-              <div className="absolute inset-0 bg-gradient-to-b from-white via-white/60 to-accent-cream z-10"></div>
-              <img 
-                src="https://t4.ftcdn.net/jpg/15/95/21/47/360_F_1595214791_DWUs5KZDRhkXHlsFVCmFSlSK4WNW5HlZ.jpg" 
-                alt="Library Background" 
-                className="w-full h-50 object-cover opacity-100 animate-scale-slow"
-              />
-           </div>
-
-           <div className="container mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="text-center lg:text-left order-2 lg:order-1">
-                <FadeIn>
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary-100 bg-white/60 backdrop-blur-md mb-8 shadow-sm">
-                        <Sparkles className="w-4 h-4 text-accent-gold" />
-                        <span className="tracking-[0.2em] uppercase text-[10px] font-bold text-primary-800">Since 1992</span>
-                    </div>
-                </FadeIn>
-
-                <FadeIn delay={0.2}>
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-medium tracking-tight mb-6 text-primary-950 leading-[0.9]">
-                        Zubair <br /> Book Depot
-                    </h1>
-                </FadeIn>
-
-                <FadeIn delay={0.4}>
-                    <p className="text-xl md:text-2xl text-gray-500 font-light max-w-lg mb-10 leading-relaxed font-serif italic lg:mx-0 mx-auto">
-                        "Curating knowledge, culture, and craftsmanship for the discerning mind."
-                    </p>
-                </FadeIn>
-
-                <FadeIn delay={0.6}>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-                        <Link href="/products" className="group px-10 py-4 bg-primary-950 text-white rounded-full font-serif text-lg hover:scale-105 transition-transform shadow-2xl flex items-center justify-center gap-3">
-                            Start Exploring <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform"/>
-                        </Link>
-                        <Link href="#collections" className="px-10 py-4 bg-white border border-gray-200 text-primary-950 rounded-full font-serif text-lg hover:bg-gray-50 transition-colors flex items-center justify-center">
-                            Our Collections
-                        </Link>
-                    </div>
-                </FadeIn>
-              </div>
-
-              {/* Floating Hero Image */}
-              <div className="relative order-1 lg:order-2 flex justify-center perspective-1000">
-                  <FadeIn delay={0.5} className="relative z-10">
-                     <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] rounded-[2rem] overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 ease-out border-[8px] border-white">
-                        <img 
-                            src="/welcomeimg.png" 
-                            alt="Featured Book" 
-                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000"
-                        />
-                         <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent"></div>
-                         {/* <div className="absolute bottom-6 left-6 text-white font-serif">
-                             <p className="text-sm uppercase tracking-widest mb-1 text-accent-gold">Featured</p>
-                             <p className="text-2xl">The Art of Design</p>
-                         </div> */}
-                     </div>
-                  </FadeIn>
-                  
-                  {/* Decorative Elements */}
-                  <div className="absolute top-10 right-10 w-24 h-24 bg-accent-gold/20 rounded-full blur-2xl animate-pulse"></div>
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary-300/30 rounded-full blur-3xl"></div>
-              </div>
-           </div>
+        <section className="relative w-full">
+            <HeroCarousel images={heroImages} />
         </section>
 
         {/* Marquee Separator */}
