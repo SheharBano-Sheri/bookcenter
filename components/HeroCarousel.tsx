@@ -30,7 +30,7 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
   };
 
   return (
-    <div className="relative w-full h-[50vh] md:h-[calc(100vh-140px)] overflow-hidden group">
+    <div className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden group">
       {/* Images */}
       <div
         className="w-full h-full flex transition-transform duration-700 ease-in-out"
@@ -41,7 +41,7 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
             <img
               src={img}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-fill"
+              className="w-full h-full object-cover"
               loading={index === 0 ? "eager" : "lazy"}
             />
              {/* Optional Overlay for better text contrast if needed later */}
