@@ -136,7 +136,7 @@ export default async function HomePage() {
                   <span className="text-accent-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Departments</span>
                   <h2 className="text-6xl font-serif text-primary-950">Our Collections</h2>
                </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-[300px_300px] gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-[300px_300px] gap-4">
                   {categories.slice(0, 4).map((category, i) => {
                     const bgImage = categoryImages[category.name] || categoryImages["Default"];
                     const isLarge = i === 0 || i === 3; 
@@ -147,7 +147,7 @@ export default async function HomePage() {
                         href={`/products?category=${category.name}`}
                         className={`group relative rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-primary-900/20 transition-all duration-700
                             /* Added min-height for mobile so items aren't squashed */
-                            min-h-[300px]
+                            min-h-[200px] md:min-h-[300px]
                             ${isLarge ? 'md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'}
                         `}
                       >
