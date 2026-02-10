@@ -71,6 +71,11 @@ export default async function HomePage() {
           alts: ["Canvas", "Canva", "Art", "Painting"],
           img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop" // Aesthetic Art/Canvas
       },
+      {
+          targetName: "Water bottle",
+          alts: ["Water Bottle", "Bottle", "Flask"],
+          img: "https://www.happyhouse.com.pk/cdn/shop/files/All_Bottles.jpg?v=1747145409" // Aesthetic Water Bottle
+      },
   ];
 
   // Resolve Items (Find in DB or Mock)
