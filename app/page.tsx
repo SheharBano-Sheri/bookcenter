@@ -28,7 +28,6 @@ export default async function HomePage() {
   // Hero Images
   const heroImages = [
     "/P1.jpeg",
-    "/P2.jpeg",
     "/P3.jpeg",
     "/P4.jpeg",
     "/P5.jpeg",
